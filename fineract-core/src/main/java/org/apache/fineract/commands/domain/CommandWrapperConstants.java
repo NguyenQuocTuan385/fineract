@@ -263,5 +263,5 @@ public final class CommandWrapperConstants {
     public static final String ENTITY_SAVINGNOTE = "SAVINGNOTE";
     public static final String ENTITY_GROUPNOTE = "GROUPNOTE";
     public static final String ENTITY_CURRENCY = "CURRENCY";
-
+    public static final String ENTITY_CLIENTSECURITYNOTE = "CLIENTSECURITYNOTE";
 }

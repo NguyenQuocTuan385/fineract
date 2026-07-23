@@ -245,11 +245,13 @@ import static org.apache.fineract.commands.domain.CommandWrapperConstants.ENTITY
 import static org.apache.fineract.commands.domain.CommandWrapperConstants.ENTITY_WORKINGCAPITALLOANPRODUCT;
 import static org.apache.fineract.commands.domain.CommandWrapperConstants.ENTITY_WORKINGCAPITALLOANTRANSACTION;
 import static org.apache.fineract.commands.domain.CommandWrapperConstants.ENTITY_WORKING_CAPITAL_LOAN_ORIGINATOR;
+import static org.apache.fineract.commands.domain.CommandWrapperConstants.ENTITY_CLIENTSECURITYNOTE;
 import static org.apache.fineract.useradministration.service.AppUserConstants.PASSWORD;
 import static org.apache.fineract.useradministration.service.AppUserConstants.REPEAT_PASSWORD;
 
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 import org.apache.fineract.commands.domain.CommandWrapper;
@@ -4132,6 +4134,64 @@ public class CommandWrapperBuilder {
         this.loanId = loanId;
         this.subentityId = originatorId;
         this.href = "/working-capital-loans/" + loanId + "/originators/" + originatorId;
+        return this;
+    }
+    public CommandWrapperBuilder createClientSecurityNote(
+            final Long clientId) {
+
+        this.actionName = ACTION_CREATE;
+        this.entityName = ENTITY_CLIENTSECURITYNOTE;
+        this.clientId = clientId;
+        this.entityId = null;
+
+        this.href = "/clients/"
+                + clientId
+                + "/security-notes";
+
+        /*
+        * Security note không nên được lưu plaintext trong
+        * m_portfolio_command.command_as_json.
+        */
+        this.sanitizeJsonKeys =
+                new HashSet<>(List.of("note"));
+
+        return this;
+    }
+
+    public CommandWrapperBuilder updateClientSecurityNote(
+            final Long clientId,
+            final Long noteId) {
+
+        this.actionName = ACTION_UPDATE;
+        this.entityName = ENTITY_CLIENTSECURITYNOTE;
+        this.clientId = clientId;
+        this.entityId = noteId;
+
+        this.href = "/clients/"
+                + clientId
+                + "/security-notes/"
+                + noteId;
+
+        this.sanitizeJsonKeys =
+                new HashSet<>(List.of("note"));
+
+        return this;
+    }
+
+    public CommandWrapperBuilder deleteClientSecurityNote(
+            final Long clientId,
+            final Long noteId) {
+
+        this.actionName = ACTION_DELETE;
+        this.entityName = ENTITY_CLIENTSECURITYNOTE;
+        this.clientId = clientId;
+        this.entityId = noteId;
+
+        this.href = "/clients/"
+                + clientId
+                + "/security-notes/"
+                + noteId;
+
         return this;
     }
 }

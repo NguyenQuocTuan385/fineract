@@ -413,6 +413,87 @@ public class SecurityConfig {
                     .requestMatchers(API_MATCHER.matcher(HttpMethod.GET, "/api/*/standinginstructionrunhistory"))
                     .hasAnyAuthority(ALL_FUNCTIONS, ALL_FUNCTIONS_READ, "READ_STANDINGINSTRUCTION")
 
+                    // client alerts: read collection
+                    .requestMatchers(
+                        API_MATCHER.matcher(
+                            HttpMethod.GET,
+                            "/api/*/clients/*/alerts"
+                        )
+                    )
+                    .hasAnyAuthority(
+                        ALL_FUNCTIONS,
+                        ALL_FUNCTIONS_READ,
+                        "READ_CLIENTALERT"
+                    )
+
+                    // client alerts: read one
+                    .requestMatchers(
+                        API_MATCHER.matcher(
+                            HttpMethod.GET,
+                            "/api/*/clients/*/alerts/*"
+                        )
+                    )
+                    .hasAnyAuthority(
+                        ALL_FUNCTIONS,
+                        ALL_FUNCTIONS_READ,
+                        "READ_CLIENTALERT"
+                    )
+
+                    // client alerts: create
+                    .requestMatchers(
+                        API_MATCHER.matcher(
+                            HttpMethod.POST,
+                            "/api/*/clients/*/alerts"
+                        )
+                    )
+                    .hasAnyAuthority(
+                        ALL_FUNCTIONS,
+                        ALL_FUNCTIONS_WRITE,
+                        "CREATE_CLIENTALERT"
+                    )
+
+                    // client alerts: update
+                    .requestMatchers(
+                        API_MATCHER.matcher(
+                            HttpMethod.PUT,
+                            "/api/*/clients/*/alerts/*"
+                        )
+                    )
+                    .hasAnyAuthority(
+                        ALL_FUNCTIONS,
+                        ALL_FUNCTIONS_WRITE,
+                        "UPDATE_CLIENTALERT"
+                    )
+
+                    // client alerts: cancel
+                    .requestMatchers(
+                        API_MATCHER.matcher(
+                            HttpMethod.DELETE,
+                            "/api/*/clients/*/alerts/*"
+                        )
+                    )
+                    .hasAnyAuthority(
+                        ALL_FUNCTIONS,
+                        ALL_FUNCTIONS_WRITE,
+                        "DELETE_CLIENTALERT"
+                    )
+
+                    // resolve/reopen cùng dùng POST item.
+                    // ApiResource tiếp tục kiểm tra permission chính xác
+                    // dựa trên query command.
+                    .requestMatchers(
+                        API_MATCHER.matcher(
+                            HttpMethod.POST,
+                            "/api/*/clients/*/alerts/*"
+                        )
+                    )
+                    .hasAnyAuthority(
+                        ALL_FUNCTIONS,
+                        ALL_FUNCTIONS_WRITE,
+                        "RESOLVE_CLIENTALERT",
+                        "REOPEN_CLIENTALERT"
+                    )
+
                     .requestMatchers(API_MATCHER.matcher(HttpMethod.POST, "/api/*/twofactor/validate")).fullyAuthenticated()
                     .requestMatchers(API_MATCHER.matcher("/api/*/twofactor")).fullyAuthenticated()
                     .requestMatchers(API_MATCHER.matcher("/api/**")).access(allOfRequestManagers(authorizationManagers));
